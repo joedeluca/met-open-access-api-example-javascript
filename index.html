@@ -37,10 +37,10 @@
 
       function submitForm(e) {
         e.preventDefault();
-        const search_str = document.getElementById("searchField").value;
+        const searchStr = document.getElementById("searchField").value;
         clearResults();
         toggleLoader();
-        search(search_str)
+        search(searchStr)
           // log response or catch error of fetch promise
           .then((data) => {
             toggleLoader();
@@ -65,25 +65,25 @@
           .catch((reason) => console.log("Error Message: " + reason.message));
       }
 
-      async function search(search_str) {
+      async function search(searchStr) {
         const api_endpoint =
           "https://collectionapi.metmuseum.org/public/collection/v1/search?isPublicDomain=true&hasImages=true&q=" +
-          search_str;
+          searchStr;
         const response = await fetch(api_endpoint);
         // returns object with two items: total: Number, objectIDs: Array
-        const artworks = await response.json();
-        let art_objects = [];
+        const data = await response.json();
+        let artObjects = [];
 
         return await Promise.all(
-          artworks.objectIDs.map(async (id) => {
+          data.objectIDs.map(async (id) => {
             const response = await fetch(
               `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
             );
-            const art = await response.json();
-            art_objects.push(art);
+            const details = await response.json();
+            artObjects.push(details);
           })
         ).then(() => {
-          return art_objects;
+          return artObjects;
         });
       }
     </script>
