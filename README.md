@@ -1,4 +1,4 @@
-# Met-Open-Access-API-Example-HTML
+# met-open-access-api-example-javascript
 
 Basic implementation of The Met's Open Access API using plain Javascript.
 
